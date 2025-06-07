@@ -1,0 +1,8 @@
+[project]
+name = "animated-video-thumnbails"
+authors = [{ name = "Gokay Biz" }]
+version = "0.1.0"
+description = "A Python package to create animated video thumbnails from a video file. Like pyvideothumbnailer but with animated (GIF) thumbnails."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["moviepy==1.0.3", "numpy>=2.3.0", "pillow==9.5.0"]
