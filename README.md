@@ -2,7 +2,7 @@
 
 A Python package designed to generate animated GIF thumbnails from video files, similar to pyvideothumbnailer but specifically for creating animated thumbnails.
 
-![Demo output](https://raw.githubusercontent.com/gokaybiz/animated-video-thumbnails/refs/heads/main/.preview/preview_output.gif)
+Check out the example output [here](https://raw.githubusercontent.com/gokaybiz/animated-video-thumbnails/refs/heads/main/.preview/preview_output.gif) (Be aware: It's ~24 MB!)
 
 ## Project Structure
 
