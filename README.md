@@ -1,15 +1,7 @@
 # Animated Video Thumbnails
 
-A functional programming approach to creating animated GIF thumbnails from video files. This project demonstrates clean architecture principles with immutable data structures, pure functions, and clear separation of concerns.
+A Python package designed to generate animated GIF thumbnails from video files, similar to pyvideothumbnailer but specifically for creating animated thumbnails.
 
-## Features
-
-- 🚀 **Parallel Processing**: Multi-core video processing for faster thumbnail generation
-- 🎯 **Functional Programming**: Pure functions, immutable data structures, and composable operations
-- ⚙️ **Configurable Quality**: Multiple preset configurations for different use cases
-- 🗜️ **Advanced Compression**: Lossy compression with gifsicle for optimal file sizes
-- 📦 **Modular Architecture**: Clean separation of concerns across focused modules
-- 🔧 **Type Safety**: Comprehensive type hints and immutable dataclasses
 
 ## Project Structure
 
@@ -456,10 +448,10 @@ python cli.py info video.mp4                        # Video information
    ```bash
    # Install uv (if not already installed)
    curl -LsSf https://astral.sh/uv/install.sh | sh
-   
+
    # Install Python dependencies
    uv sync
-   
+
    # Install system dependencies
    sudo apt-get install gifsicle  # or brew install gifsicle
    ```
