@@ -15,7 +15,6 @@ from .extraction import (
     format_duration_ms,
     calculate_aspect_ratio,
     validate_media_file,
-    get_pymediainfo_version,
     extract_audio_info,
 )
 
@@ -28,6 +27,5 @@ __all__ = [
     "format_duration_ms",
     "calculate_aspect_ratio",
     "validate_media_file",
-    "get_pymediainfo_version",
     "extract_audio_info",
 ]

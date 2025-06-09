@@ -8,7 +8,7 @@ all processing steps to create animated video thumbnails from video files.
 import os
 import time
 
-from ..types.models import Config, extract_metadata_with_pymediainfo
+from ..types.models import Config, extract_metadata_information
 from ..core.functions import (
     generate_timestamps,
     create_processing_metadata,
@@ -52,7 +52,7 @@ def create_video_preview(config: Config) -> None:
     # Extract metadata if needed
     metadata = None
     if config.include_metadata:
-        metadata = extract_metadata_with_pymediainfo(config.video_path)
+        metadata = extract_metadata_information(config.video_path)
 
     video.close()
 

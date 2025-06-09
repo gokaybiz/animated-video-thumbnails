@@ -186,5 +186,8 @@ def extract_metadata_information(video_path: str) -> CompleteMetadata:
     try:
         from ..metadata.extraction import extract_complete_metadata
         return extract_complete_metadata(video_path)
-    except ImportError:
+    except ImportError as _:
+        print(_)
         raise Exception("pymediainfo is required for metadata extraction. Install with: pip install pymediainfo")
+    except Exception as e:
+        raise Exception(f"Failed to extract metadata from {video_path}: {str(e)}")
