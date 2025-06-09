@@ -11,8 +11,8 @@ import tempfile
 import time
 import multiprocessing
 from typing import List
-from concurrent.futures import ProcessPoolExecutor, as_completed
-from moviepy.editor import VideoFileClip
+from concurrent.futures import ProcessPoolExecutor, as_completed, wait
+from moviepy import VideoFileClip
 from PIL import ImageFont
 
 from ..types.models import ClipMetadata, ClipTask, Config
@@ -95,6 +95,8 @@ def create_clips_parallel(video_path: str, metadatas: List[ClipMetadata],
                     print(f"Task {task.metadata.index} failed: {e}")
                     completed_files.append(task.temp_output_path)  # Include even if failed
 
+            wait(future_to_task) # Ensure all tasks are completed
+
         # Load temporary files back as VideoFileClip objects
         print("Loading processed clips...")
         clips = []
@@ -155,10 +157,10 @@ def create_clips_sequential(video_path: str, metadatas: List[ClipMetadata],
     start_time = time.time()
     for i, metadata in enumerate(metadatas):
         # Create base clip
-        base_clip = video.subclip(
+        base_clip = video.subclipped(
             metadata.start_time.seconds,
             metadata.start_time.seconds + metadata.duration
-        ).resize(height=metadata.height).set_fps(config.processing.processing_fps)
+        ).resized(height=metadata.height).with_fps(config.processing.processing_fps)
 
         # Create annotation function without lambda
         def annotate_frame_with_time(get_frame, t, start_time=metadata.start_time):
@@ -167,7 +169,7 @@ def create_clips_sequential(video_path: str, metadatas: List[ClipMetadata],
             current_time = TimeStamp(int(start_time.seconds + t))
             return create_annotation_function(frame, current_time.format(), font)
 
-        annotated_clip = base_clip.fl(annotate_frame_with_time)
+        annotated_clip = base_clip.transform(annotate_frame_with_time)
         clips.append(annotated_clip)
 
         # Progress reporting

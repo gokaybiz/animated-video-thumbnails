@@ -7,7 +7,7 @@ including frame annotation and clip processing tasks.
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
-from moviepy.editor import VideoFileClip
+from moviepy import VideoFileClip
 
 from ..types.models import TimeStamp, ClipTask
 
@@ -52,10 +52,10 @@ def process_single_clip(task: ClipTask) -> str:
         font = ImageFont.load_default()
 
         # Create base clip
-        base_clip = video.subclip(
+        base_clip = video.subclipped(
             task.metadata.start_time.seconds,
             task.metadata.start_time.seconds + task.metadata.duration
-        ).resize(height=task.metadata.height).set_fps(task.processing_fps)
+        ).resized(height=task.metadata.height).with_fps(task.processing_fps)
 
         # Create annotated clip using a custom function that avoids lambda
         def annotate_frame_with_time(get_frame, t):
@@ -64,7 +64,7 @@ def process_single_clip(task: ClipTask) -> str:
             return create_annotation_function(frame, current_time.format(), font)
 
         # Apply annotation without lambda
-        annotated_clip = base_clip.fl(annotate_frame_with_time)
+        annotated_clip = base_clip.transform(annotate_frame_with_time)
 
         # Export to temporary file
         annotated_clip.write_gif(task.temp_output_path, fps=task.processing_fps)
@@ -81,9 +81,9 @@ def process_single_clip(task: ClipTask) -> str:
         # Create a minimal black GIF as fallback
         try:
             video = VideoFileClip(task.video_path)
-            black_clip = video.subclip(0, task.metadata.duration).resize(
+            black_clip = video.subclipped(0, task.metadata.duration).resized(
                 height=task.metadata.height
-            ).fx(lambda clip: clip.set_opacity(0.1))
+            ).with_opacity(0.1)
             black_clip.write_gif(task.temp_output_path, fps=task.processing_fps)
             black_clip.close()
             video.close()

@@ -9,8 +9,8 @@ and don't modify external state.
 import os
 import uuid
 import numpy as np
-from typing import List, Tuple, Union
-from moviepy.editor import VideoFileClip, ColorClip, CompositeVideoClip, VideoClip
+from typing import List, Tuple, Union, cast
+from moviepy import VideoFileClip, ColorClip, CompositeVideoClip, VideoClip
 from PIL import Image, ImageDraw, ImageFont
 
 from ..types.models import TimeStamp, ClipMetadata, Config, CompressionConfig, CompleteMetadata
@@ -130,7 +130,7 @@ def create_grid_layout(clips: List[VideoFileClip], cols: int, rows: int, padding
         for col_idx, clip in enumerate(row_clips):
             x_pos = col_idx * (clip_width + padding)
             y_pos = row_idx * (clip_height + padding)
-            positioned_clips.append(clip.set_position((x_pos, y_pos)))
+            positioned_clips.append(clip.with_position((x_pos, y_pos)))
 
     return CompositeVideoClip(
             positioned_clips,
@@ -158,7 +158,7 @@ def pad_clips_to_grid_size(clips: List[VideoFileClip], target_size: int) -> List
 
     padded = clips.copy()
     if len(padded) > 0:
-        transparent_clip = clips[0].fx(lambda clip: clip.set_opacity(0))
+        transparent_clip = clips[0].with_opacity(0)
         while len(padded) < target_size:
             padded.append(transparent_clip)
 
@@ -239,15 +239,15 @@ def create_metadata_header(metadata: CompleteMetadata, width: int, height: int,
         duration: Duration of header clip in seconds
 
     Returns:
-        VideoClip containing the metadata overlay
+        VideoClip | Clip containing the metadata overlay
     """
     # Create the overlay image
     overlay_array = create_metadata_overlay_image(metadata, width, height)
 
-    header_clip = VideoClip(make_frame=lambda _: overlay_array, duration=duration)
-    header_clip = header_clip.set_fps(1)
+    header_clip = VideoClip(frame_function=lambda _: overlay_array, duration=duration)
+    header_clip = header_clip.with_fps(1)
 
-    return header_clip
+    return cast(VideoClip, header_clip)
 
 
 def combine_metadata_with_grid(metadata: CompleteMetadata, grid_clip: Union[VideoFileClip, CompositeVideoClip]) -> CompositeVideoClip:
@@ -285,8 +285,8 @@ def combine_metadata_with_grid(metadata: CompleteMetadata, grid_clip: Union[Vide
     )
 
     # Position clips
-    header_positioned = header_clip.set_position((0, 0))
-    grid_positioned = grid_clip.set_position((0, metadata_height))
+    header_positioned = header_clip.with_position((0, 0))
+    grid_positioned = grid_clip.with_position((0, metadata_height))
 
     # Compose all clips
     final_clip = CompositeVideoClip([

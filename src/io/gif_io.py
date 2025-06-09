@@ -7,8 +7,8 @@ All functions in this module have side effects (file I/O, subprocess execution).
 
 import os
 import subprocess
-from moviepy.editor import CompositeVideoClip
-
+from moviepy import CompositeVideoClip, VideoFileClip
+from typing import cast
 from ..types.models import CompressionConfig
 from ..core.functions import build_gifsicle_command
 
@@ -25,7 +25,10 @@ def export_gif_optimized(clip: CompositeVideoClip, output_path: str, final_fps: 
     print(f"Exporting GIF at final quality: {final_fps}fps...")
 
     # Resize to final dimensions and set final fps
-    final_clip = clip.set_fps(final_fps)
+    final_clip = cast(
+        VideoFileClip,
+        clip.with_fps(final_fps)
+    )
     final_clip.write_gif(output_path, fps=final_fps)
     final_clip.close()
 

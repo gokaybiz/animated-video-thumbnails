@@ -95,7 +95,7 @@ def create_video_preview(config: Config) -> None:
         if clip:
             clip.close()
 
-    if final_clip != grid_clip:
+    if final_clip is not grid_clip:
         final_clip.close()
     grid_clip.close()
 

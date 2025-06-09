@@ -6,9 +6,9 @@ description = "A Python package to create animated video thumbnails from a video
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "imageio<=2.5.0",
-    "moviepy==1.0.3",
+    "imageio>=2.37.0",
+    "moviepy>=2.2.1",
     "numpy>=2.3.0",
-    "pillow==9.5.0",
+    "pillow>=1.2.1",
     "pymediainfo>=6.0.1",
 ]
