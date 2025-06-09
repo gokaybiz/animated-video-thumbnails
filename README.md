@@ -15,29 +15,31 @@ animated-video-thumbnails/
 │   │   └── models.py            # All dataclasses and type definitions
 │   ├── core/                    # Business logic
 │   │   ├── __init__.py
-│   │   ├── functions.py         # Utility functions
+│   │   ├── functions.py         # Core utility functions
 │   │   └── processing.py        # Processing functions
-│   ├── io/                      # Side effect operations
+│   ├── io/                      # Side effect operations (input/output)
 │   │   ├── __init__.py
 │   │   ├── video_io.py          # Video loading and clip creation
 │   │   └── gif_io.py            # GIF export and compression
-│   ├── pipeline/                # Main orchestration
+│   ├── metadata/                # Metadata extraction (using pymediainfo)
+│   │   ├── __init__.py
+│   │   └── extraction.py        # Video metadata extraction functions
+│   ├── pipeline/                # Main orchestration and workflow
 │   │   ├── __init__.py
 │   │   └── main_pipeline.py    # Complete processing pipeline
-│   ├── config/                  # Configuration management
+│   ├── config/                 # Configuration management
 │   │   ├── __init__.py
 │   │   └── defaults.py         # Configuration factory functions
-│   └── cli/                     # Command-line interface
+│   └── cli/                    # Command-line interface
 │       ├── __init__.py
 │       ├── parser.py           # CLI argument parsing
 │       ├── commands.py         # Command handlers
 │       └── utils.py            # CLI utilities
-├── main.py                      # Entry point with examples
-├── cli.py                       # Command-line interface entry point
-├── example.py                   # Usage examples
-├── cli_demo.py                  # CLI demonstration script
-├── test_files/                  # Sample video files
-└── README.md                    # This file
+├── main.py                     # Entry point with examples
+├── cli.py                      # Command-line interface entry point
+├── example.py                  # Usage examples
+├── cli_demo.py                 # CLI demonstration script
+└── README.md                   # This file
 ```
 
 ## Architecture Principles
@@ -46,6 +48,7 @@ animated-video-thumbnails/
 - **types/**: Data definitions
 - **core/**: Business logic and algorithms
 - **io/**: File I/O, external processes
+- **metadata/**: Video analysis and information extraction
 - **pipeline/**: Orchestration and workflow
 - **config/**: Configuration and presets
 
@@ -390,19 +393,20 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 uv sync
 
 # Or install specific packages
-uv add moviepy pillow
+uv add moviepy pillow pymediainfo
 ```
 
 ### System Dependencies
 ```bash
 # Ubuntu/Debian
-sudo apt-get install gifsicle
+sudo apt-get install gifsicle libmediainfo-dev
 
 # macOS
-brew install gifsicle
+brew install gifsicle media-info libmediainfo
 
 # Windows
 # Download from https://www.lcdf.org/gifsicle/
+# Install libmediainfo from https://mediaarea.net/en/MediaInfo
 ```
 
 ### Dependencies Overview
