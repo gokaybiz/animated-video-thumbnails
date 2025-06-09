@@ -7,7 +7,6 @@ all processing steps to create animated video thumbnails from video files.
 
 import os
 import time
-from moviepy.editor import clips_array
 
 from ..types.models import Config
 from ..core.functions import (
@@ -73,12 +72,9 @@ def create_video_preview(config: Config) -> None:
     # Pad and arrange
     print("Arranging grid layout...")
     padded_clips = pad_clips_to_grid_size(clips, config.cols * config.rows)
-    grid_layout = create_grid_layout(padded_clips, config.cols, config.rows)
+    grid_clip = create_grid_layout(padded_clips, config.cols, config.rows, config.grid_padding)
 
-    # Create grid and export at final quality
-    print("Creating final grid...")
-    grid_clip = clips_array(grid_layout)
-
+    # Create grid and export
     export_gif_optimized(grid_clip, config.output_path, config.fps)
 
     # Clean up clips

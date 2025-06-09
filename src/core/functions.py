@@ -9,7 +9,7 @@ and don't modify external state.
 import os
 import uuid
 from typing import List
-from moviepy.editor import VideoFileClip
+from moviepy.editor import VideoFileClip, ColorClip, CompositeVideoClip
 
 from ..types.models import TimeStamp, ClipMetadata, Config, CompressionConfig
 
@@ -97,7 +97,7 @@ def create_temp_filename(base_dir: str, index: int) -> str:
     return os.path.join(base_dir, f"clip_{index:03d}_{unique_id}.gif")
 
 
-def create_grid_layout(clips: List[VideoFileClip], cols: int, rows: int) -> List[List[VideoFileClip]]:
+def create_grid_layout(clips: List[VideoFileClip], cols: int, rows: int, padding: int = 5) -> CompositeVideoClip:
     """
     Arrange clips into grid layout.
 
@@ -105,17 +105,36 @@ def create_grid_layout(clips: List[VideoFileClip], cols: int, rows: int) -> List
         clips: List of video clips to arrange
         cols: Number of columns in grid
         rows: Number of rows in grid
+        padding: Padding between clips in pixels
 
     Returns:
-        2D list representing grid layout of clips
+        grid layout of clips
     """
+    # Get dimensions from first clip
+    clip_width, clip_height = clips[0].size
+
+    # Calculate total grid dimensions including padding
+    total_width = (cols * clip_width) + ((cols - 1) * padding)
+    total_height = (rows * clip_height) + ((rows - 1) * padding)
+
     grid = []
     for row in range(rows):
         start_idx = row * cols
         end_idx = start_idx + cols
-        row_clips = clips[start_idx:end_idx]
-        grid.append(row_clips)
-    return grid
+        grid.append(clips[start_idx:end_idx])
+
+    positioned_clips = []
+    for row_idx, row_clips in enumerate(grid):
+        for col_idx, clip in enumerate(row_clips):
+            x_pos = col_idx * (clip_width + padding)
+            y_pos = row_idx * (clip_height + padding)
+            positioned_clips.append(clip.set_position((x_pos, y_pos)))
+
+    return CompositeVideoClip(
+            positioned_clips,
+            size=(total_width, total_height),
+            bg_color=(0, 0, 0)
+        )
 
 
 def pad_clips_to_grid_size(clips: List[VideoFileClip], target_size: int) -> List[VideoFileClip]:

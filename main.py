@@ -48,7 +48,7 @@ def main() -> None:
     print("Starting animated video thumbnail generation...")
     print(f"Input: {config.video_path}")
     print(f"Output: {config.compressed_output_path}")
-    print(f"Grid: {config.cols}x{config.rows}")
+    print(f"Grid: {config.cols}x{config.rows} with padding {config.grid_padding}px")
     print(f"Clip duration: {config.clip_duration}s")
     print(f"Interval: {config.interval}s")
     print(f"Final FPS: {config.fps}")

@@ -64,7 +64,7 @@ def example_fast_processing():
     )
 
     print("Fast processing configuration:")
-    print(f"- Grid: {config.cols}x{config.rows}")
+    print(f"- Grid: {config.cols}x{config.rows} with padding {config.grid_padding}px")
     print(f"- Clip duration: {config.clip_duration}s")
     print(f"- Interval: {config.interval}s")
     print(f"- Processing height: {config.processing.processing_height}px")
@@ -95,7 +95,7 @@ def example_high_quality():
     )
 
     print("High quality configuration:")
-    print(f"- Grid: {config.cols}x{config.rows}")
+    print(f"- Grid: {config.cols}x{config.rows} with padding {config.grid_padding}px")
     print(f"- Clip duration: {config.clip_duration}s")
     print(f"- Processing height: {config.processing.processing_height}px")
     print(f"- Colors: {config.compression.max_colors}")
@@ -140,6 +140,7 @@ def example_custom_configuration():
         fps=12,  # Low final fps
         cols=2,  # Small grid
         rows=2,
+        grid_padding=2,
         output_path="example_custom.gif",
         compressed_output_path="example_custom_compressed.gif",
         compression=custom_compression,
@@ -147,7 +148,7 @@ def example_custom_configuration():
     )
 
     print("Custom configuration:")
-    print(f"- Tiny grid: {custom_config.cols}x{custom_config.rows}")
+    print(f"- Tiny Grid: {custom_config.cols}x{custom_config.rows} with padding {custom_config.grid_padding}px")
     print(f"- Short clips: {custom_config.clip_duration}s")
     print(f"- Large intervals: {custom_config.interval}s")
     print(f"- Limited workers: {custom_config.processing.max_workers}")
@@ -237,6 +238,7 @@ def example_error_handling():
             fps=30,
             cols=0,  # Invalid grid
             rows=0,
+            grid_padding=-10,
             output_path="invalid.gif",
             compressed_output_path="invalid_compressed.gif",
             compression=CompressionConfig(

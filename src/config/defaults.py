@@ -62,6 +62,7 @@ def create_default_config(
         fps=25,  # Final output fps
         cols=3,  # 3x5 grid layout
         rows=5,
+        grid_padding=4,
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=create_default_compression_config(),
@@ -106,6 +107,7 @@ def create_fast_config(
         fps=20,
         cols=3,
         rows=5,
+        grid_padding=4,
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=fast_compression,
@@ -150,6 +152,7 @@ def create_quality_config(
         fps=30,
         cols=4,
         rows=6,
+        grid_padding=5,
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=quality_compression,

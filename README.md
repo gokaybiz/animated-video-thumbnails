@@ -8,19 +8,19 @@ Check out the example output [here](https://raw.githubusercontent.com/gokaybiz/a
 
 ```
 animated-video-thumbnails/
-├── src/                          # Main package source code
+├── src/                         # Main package source code
 │   ├── __init__.py              # Package exports and public API
 │   ├── types/                   # Immutable data models
 │   │   ├── __init__.py
 │   │   └── models.py            # All dataclasses and type definitions
-│   ├── core/                    # Pure business logic
+│   ├── core/                    # Business logic
 │   │   ├── __init__.py
-│   │   ├── functions.py         # Deterministic utility functions
-│   │   └── processing.py        # Parallel processing functions
+│   │   ├── functions.py         # Utility functions
+│   │   └── processing.py        # Processing functions
 │   ├── io/                      # Side effect operations
 │   │   ├── __init__.py
-│   │   ├── video_io.py         # Video loading and clip creation
-│   │   └── gif_io.py           # GIF export and compression
+│   │   ├── video_io.py          # Video loading and clip creation
+│   │   └── gif_io.py            # GIF export and compression
 │   ├── pipeline/                # Main orchestration
 │   │   ├── __init__.py
 │   │   └── main_pipeline.py    # Complete processing pipeline
@@ -87,7 +87,7 @@ python cli.py generate video.mp4 --preset fast
 python cli.py generate video.mp4 --preset quality
 
 # Custom settings
-python cli.py generate video.mp4 --grid 4x3 --fps 30 --lossy 60
+python cli.py generate video.mp4 --grid 4x3 --grid-padding=2 --fps 30 --lossy 60
 ```
 
 #### Python API
@@ -161,6 +161,7 @@ class Config:
     fps: int                          # Final output FPS
     cols: int                         # Grid columns
     rows: int                         # Grid rows
+    grid_padding: int                 # Grid padding
     output_path: str                  # Initial GIF output path
     compressed_output_path: str       # Final compressed output path
     compression: CompressionConfig    # Compression settings
@@ -181,6 +182,7 @@ custom_config = Config(
     fps=20,
     cols=4,
     rows=4,
+    grid_padding=2,
     output_path="custom.gif",
     compressed_output_path="custom_compressed.gif",
     compression=CompressionConfig(
@@ -237,6 +239,7 @@ Options:
   -o, --output PATH          Output file path
   --preset {default,fast,quality}  Configuration preset
   --grid COLSxROWS          Grid layout (e.g., 3x5, 4x3)
+  --grid PIXELS          Grid layout padding (default: 5)
   --clip-duration SECONDS   Duration of each clip
   --interval SECONDS        Interval between clips
   --fps FPS                 Final output frames per second
@@ -257,6 +260,7 @@ python cli.py preview video.mp4 [OPTIONS]
 Options:
   -o, --output PATH         Output preview file
   --grid COLSxROWS         Preview grid layout (default: 2x2)
+  --grid-padding PIXELS         Preview grid layout padding (default: 5)
 ```
 
 #### Batch Command
@@ -296,8 +300,9 @@ python cli.py generate video.mp4 --preset fast      # Fast processing
 python cli.py generate video.mp4 --preset quality   # High quality
 
 # Custom grid layouts
-python cli.py generate video.mp4 --grid 2x3         # 2 columns, 3 rows
-python cli.py generate video.mp4 --grid 5x4         # 5 columns, 4 rows
+python cli.py generate video.mp4 --grid 2x3                  # 2 columns, 3 rows
+python cli.py generate video.mp4 --grid 5x4                  # 5 columns, 4 rows
+python cli.py generate video.mp4 --grid 5x4 --grid-padding=4 # 5 columns, 4 rows with padding
 
 # Custom timing
 python cli.py generate video.mp4 --clip-duration 3 --interval 45 --fps 30

@@ -126,6 +126,13 @@ def _add_generate_parser(subparsers) -> None:
         help="Grid layout (e.g., 3x5, 4x3)"
     )
 
+    generate_parser.add_argument(
+        "--grid-padding",
+        type=int,
+        metavar="PIXELS",
+        help="Padding between grid cells in pixels (default: 5)"
+    )
+
     # Timing options
     generate_parser.add_argument(
         "--clip-duration",
@@ -345,6 +352,10 @@ def validate_cli_args(args: argparse.Namespace) -> Tuple[bool, List[str]]:
         if not _validate_grid_format(args.grid):
             errors.append(f"Invalid grid format: {args.grid}. Use format like '3x5' or '4x3'")
 
+    if hasattr(args, 'grid_padding') and args.grid_padding is not None:
+        if args.grid_padding <= 0:
+            errors.append("Padding level must be positive")
+
     # Validate numeric ranges
     if hasattr(args, 'clip_duration') and args.clip_duration is not None:
         if args.clip_duration <= 0:
@@ -417,6 +428,9 @@ def args_to_config(args: argparse.Namespace) -> Config:
         cols, rows = _parse_grid(args.grid)
         updates['cols'] = cols
         updates['rows'] = rows
+
+    if hasattr(args, 'grid_padding') and args.grid_padding:
+        updates['grid_padding'] = args.grid_padding
 
     # Timing
     if hasattr(args, 'clip_duration') and args.clip_duration is not None:

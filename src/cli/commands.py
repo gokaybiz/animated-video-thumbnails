@@ -123,7 +123,7 @@ def cmd_preview(args) -> int:
 
         config = replace(config,
             output_path=output_path,
-            compressed_output_path=output_path
+            compressed_output_path=output_path.replace('.gif', '_compressed.gif')
         )
 
         # Further optimize for speed
@@ -229,7 +229,7 @@ def cmd_batch(args) -> int:
 
                 config = replace(config,
                     output_path=output_path,
-                    compressed_output_path=output_path
+                    compressed_output_path=output_path.replace('.gif', '_compressed.gif')
                 )
 
                 # Process the video

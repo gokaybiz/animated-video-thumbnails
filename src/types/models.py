@@ -36,6 +36,7 @@ class Config:
     fps: int
     cols: int
     rows: int
+    grid_padding: int
     output_path: str
     compressed_output_path: str
     compression: CompressionConfig
