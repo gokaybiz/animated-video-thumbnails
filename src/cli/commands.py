@@ -48,6 +48,11 @@ def cmd_generate(args) -> int:
                 output_path=output_base,
                 compressed_output_path=output_base.replace('.gif', '_compressed.gif')
             )
+        else:
+            config = replace(config,
+                output_path=args.output,
+                compressed_output_path=args.output.replace('.gif', '_compressed.gif')
+            )
 
         # Handle no-compress option
         if getattr(args, 'no_compress', False):
