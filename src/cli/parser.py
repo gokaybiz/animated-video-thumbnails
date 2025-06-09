@@ -206,6 +206,14 @@ def _add_generate_parser(subparsers) -> None:
         help="Optimization level (1-3)"
     )
 
+    # Metadata options
+    generate_parser.add_argument(
+        "--include-metadata",
+        action="store_true",
+        default=True,
+        help="Include metadata header in output"
+    )
+
 
 def _add_preview_parser(subparsers) -> None:
     """Add the preview command parser."""
@@ -476,6 +484,10 @@ def args_to_config(args: argparse.Namespace) -> Config:
     if compression_updates:
         new_compression = replace(config.compression, **compression_updates)
         updates['compression'] = new_compression
+
+    # Metadata options
+    if hasattr(args, 'include_metadata') and args.include_metadata:
+        updates['include_metadata'] = args.include_metadata
 
     # Apply updates
     if updates:

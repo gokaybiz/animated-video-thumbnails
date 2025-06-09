@@ -8,12 +8,13 @@ all processing steps to create animated video thumbnails from video files.
 import os
 import time
 
-from ..types.models import Config
+from ..types.models import Config, extract_metadata_with_pymediainfo
 from ..core.functions import (
     generate_timestamps,
     create_processing_metadata,
     create_grid_layout,
     pad_clips_to_grid_size,
+    combine_metadata_with_grid,
 )
 from ..io.video_io import load_video, create_clips_parallel
 from ..io.gif_io import export_gif_optimized, compress_gif
@@ -47,6 +48,12 @@ def create_video_preview(config: Config) -> None:
     print("Loading video metadata...")
     video = load_video(config.video_path)
     video_duration = video.duration
+
+    # Extract metadata if needed
+    metadata = None
+    if config.include_metadata:
+        metadata = extract_metadata_with_pymediainfo(config.video_path)
+
     video.close()
 
     # Generate timestamps and metadata
@@ -74,13 +81,22 @@ def create_video_preview(config: Config) -> None:
     padded_clips = pad_clips_to_grid_size(clips, config.cols * config.rows)
     grid_clip = create_grid_layout(padded_clips, config.cols, config.rows, config.grid_padding)
 
+    # Optionally combine with metadata header
+    final_clip = grid_clip
+    if config.include_metadata and metadata:
+        print("Adding metadata header...")
+        final_clip = combine_metadata_with_grid(metadata, grid_clip)
+
     # Create grid and export
-    export_gif_optimized(grid_clip, config.output_path, config.fps)
+    export_gif_optimized(final_clip, config.output_path, config.fps)
 
     # Clean up clips
     for clip in clips:
         if clip:
             clip.close()
+
+    if final_clip != grid_clip:
+        final_clip.close()
     grid_clip.close()
 
     # Compress the GIF

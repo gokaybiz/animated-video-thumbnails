@@ -12,6 +12,14 @@ from .models import (
     TimeStamp,
     ClipMetadata,
     ClipTask,
+    VideoMetadata,
+    AudioMetadata,
+    FileMetadata,
+    CompleteMetadata,
+    format_file_size,
+    format_duration_seconds,
+    calculate_aspect_ratio,
+    extract_metadata_information,
 )
 
 __all__ = [
@@ -21,4 +29,12 @@ __all__ = [
     "TimeStamp",
     "ClipMetadata",
     "ClipTask",
+    "VideoMetadata",
+    "AudioMetadata",
+    "FileMetadata",
+    "CompleteMetadata",
+    "format_file_size",
+    "format_duration_seconds",
+    "calculate_aspect_ratio",
+    "extract_metadata_information",
 ]

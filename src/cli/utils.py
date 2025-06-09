@@ -26,7 +26,7 @@ def print_config_summary(config: Config) -> None:
     print("=" * 40)
     print(f"📹 Input:         {config.video_path}")
     print(f"📄 Output:        {config.compressed_output_path}")
-    print(f"📐 Grid:          {config.cols}x{config.rows}")
+    print(f"📐 Grid:          {config.cols}x{config.rows} with padding {config.grid_padding}px")
     print(f"⏱️  Clip duration: {config.clip_duration}s")
     print(f"📏 Interval:      {config.interval}s")
     print(f"🎞️  Final FPS:     {config.fps}")
@@ -363,6 +363,9 @@ def check_dependencies() -> Tuple[bool, list]:
     if importlib.util.find_spec('PIL') is None:
         missing.append("Pillow")
 
+    if importlib.util.find_spec('pymediainfo') is None:
+        missing.append("pymediainfo")
+
     # Check external tools
     import subprocess
     try:
@@ -370,6 +373,12 @@ def check_dependencies() -> Tuple[bool, list]:
                       capture_output=True, check=True)
     except (subprocess.CalledProcessError, FileNotFoundError):
         missing.append("gifsicle")
+    try:
+        subprocess.run(['mediainfo', '--version'],
+                      capture_output=True, check=True)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        missing.append("mediainfo")
+
 
     return len(missing) == 0, missing
 
@@ -390,6 +399,12 @@ def print_version_info() -> None:
         print(f"  - Pillow: {PIL.__version__}")
     except (ImportError, AttributeError):
         print("  - Pillow: Not available")
+
+    try:
+        import pymediainfo
+        print(f"  - PyMediainfo: {pymediainfo.__version__}")
+    except (ImportError, AttributeError):
+        print("  - PyMediainfo: Not available")
 
     import subprocess
     try:

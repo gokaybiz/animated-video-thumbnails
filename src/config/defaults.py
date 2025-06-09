@@ -66,7 +66,8 @@ def create_default_config(
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=create_default_compression_config(),
-        processing=create_default_processing_config()
+        processing=create_default_processing_config(),
+        include_metadata=True
     )
 
 
@@ -111,7 +112,8 @@ def create_fast_config(
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=fast_compression,
-        processing=fast_processing
+        processing=fast_processing,
+        include_metadata=True
     )
 
 
@@ -156,5 +158,6 @@ def create_quality_config(
         output_path=output_path,
         compressed_output_path=compressed_output_path,
         compression=quality_compression,
-        processing=quality_processing
+        processing=quality_processing,
+        include_metadata=True
     )
