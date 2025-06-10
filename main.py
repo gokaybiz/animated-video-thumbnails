@@ -2,7 +2,7 @@
 """
 Animated Video Thumbnails - Main Entry Point
 
-A functional programming approach to creating animated GIF thumbnails from video files.
+A functional programming approach to creating GIF thumbnails from video files.
 This script demonstrates how to use the modular animated video thumbnails package.
 
 Usage:
@@ -17,13 +17,14 @@ Features:
 Requirements:
     - moviepy
     - Pillow
+    - pymediainfo (for video metadata)
     - gifsicle (for compression)
 """
 
 from src.config.defaults import (
     create_fast_config,
 )
-from src.pipeline.main_pipeline import create_video_preview
+from src.pipeline.main_pipeline import create_video_thumbnails
 
 
 def main() -> None:
@@ -57,7 +58,7 @@ def main() -> None:
 
     try:
         # Run the main pipeline
-        create_video_preview(config)
+        create_video_thumbnails(config)
 
         print("-" * 50)
         print("Success! Animated thumbnail created successfully.")

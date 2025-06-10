@@ -1,7 +1,7 @@
 """
 Core module for animated video thumbnails.
 
-This module contains pure functions and business logic without side effects.
+This module contains functions and business logic without side effects.
 All functions in this module are deterministic and can be safely composed.
 """
 

@@ -1,7 +1,7 @@
 """
 Metadata extraction functions for video files using pymediainfo.
 
-This module provides pure functions for extracting comprehensive metadata
+This module provides functions for extracting comprehensive metadata
 from video files using the pymediainfo library, which provides accurate
 and detailed media information. All functions follow functional programming principles.
 """

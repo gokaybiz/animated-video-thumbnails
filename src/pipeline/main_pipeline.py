@@ -20,7 +20,7 @@ from ..io.video_io import load_video, create_clips_parallel
 from ..io.gif_io import export_gif_optimized, compress_gif
 
 
-def create_video_preview(config: Config) -> None:
+def create_video_thumbnails(config: Config) -> None:
     """
     Optimized main pipeline with parallel processing.
 

@@ -1,7 +1,7 @@
 """
 Default configuration factory functions for animated video thumbnails.
 
-This module provides pure functions to create default configurations
+This module provides functions to create default configurations
 following functional programming principles. All functions return
 immutable configuration objects.
 """

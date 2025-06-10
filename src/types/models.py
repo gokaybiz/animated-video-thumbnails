@@ -2,7 +2,7 @@
 Data models and type definitions for animated video thumbnails.
 
 All models are immutable (frozen dataclasses) following functional programming principles.
-They represent pure data structures without behavior.
+They represent data structures without behavior.
 """
 
 from dataclasses import dataclass

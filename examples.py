@@ -13,7 +13,7 @@ from src.config.defaults import (
     create_quality_config
 )
 from dataclasses import replace
-from src.pipeline.main_pipeline import create_video_preview
+from src.pipeline.main_pipeline import create_video_thumbnails
 from src.types.models import Config, ProcessingConfig, CompressionConfig
 
 
@@ -40,7 +40,7 @@ def example_basic_usage():
     print(f"Output: {config.compressed_output_path}")
 
     try:
-        create_video_preview(config)
+        create_video_thumbnails(config)
         print("✓ Basic example completed successfully!")
     except Exception as e:
         print(f"❌ Error in basic example: {e}")
@@ -71,7 +71,7 @@ def example_fast_processing():
     print(f"- Final FPS: {config.fps}")
 
     try:
-        create_video_preview(config)
+        create_video_thumbnails(config)
         print("✅ Fast processing example completed!")
     except Exception as e:
         print(f"❌ Error in fast example: {e}")
@@ -102,7 +102,7 @@ def example_high_quality():
     print(f"- Lossy level: {config.compression.lossy_level}")
 
     try:
-        create_video_preview(config)
+        create_video_thumbnails(config)
         print("✓ High quality example completed!")
     except Exception as e:
         print(f"❌ Error in quality example: {e}")
@@ -155,7 +155,7 @@ def example_custom_configuration():
     print(f"- High compression: {custom_config.compression.lossy_level}")
 
     try:
-        create_video_preview(custom_config)
+        create_video_thumbnails(custom_config)
         print("✓ Custom configuration example completed!")
     except Exception as e:
         print(f"❌ Error in custom example: {e}")
@@ -203,7 +203,7 @@ def example_functional_composition():
             compressed_output_path="example_functional_compressed.gif"
         )
 
-        create_video_preview(config)
+        create_video_thumbnails(config)
         print("✅ Functional composition example completed!")
 
     except Exception as e:
@@ -221,7 +221,7 @@ def example_error_handling():
             output_path="error_test.gif",
             compressed_output_path="error_test_compressed.gif"
         )
-        create_video_preview(config)
+        create_video_thumbnails(config)
     except FileNotFoundError:
         print("✅ Correctly handled missing video file")
     except Exception as e:
@@ -256,7 +256,7 @@ def example_error_handling():
         )
 
         if os.path.exists(invalid_config.video_path):
-            create_video_preview(invalid_config)
+            create_video_thumbnails(invalid_config)
             print("⚠️  Processed despite questionable configuration")
         else:
             print("⚠️  Cannot test invalid config - video file missing")

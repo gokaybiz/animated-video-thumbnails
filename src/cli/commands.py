@@ -2,7 +2,7 @@
 CLI command handlers for animated video thumbnails.
 
 This module contains the main command handlers that implement the CLI functionality.
-Each command is a pure function that takes parsed arguments and executes the
+Each command is a function that takes parsed arguments and executes the
 corresponding operation using the core application modules.
 """
 
@@ -12,7 +12,7 @@ import glob
 from pathlib import Path
 from dataclasses import replace
 
-from ..pipeline.main_pipeline import create_video_preview
+from ..pipeline.main_pipeline import create_video_thumbnails
 from ..config.defaults import (
     create_default_config,
     create_fast_config,
@@ -73,7 +73,7 @@ def cmd_generate(args) -> int:
         print(f"🎬 Generating animated thumbnail from: {config.video_path}")
         start_time = time.time()
 
-        create_video_preview(config)
+        create_video_thumbnails(config)
 
         elapsed = time.time() - start_time
         print(f"\n✅ Success! Generated in {format_duration(elapsed)}")
@@ -142,7 +142,7 @@ def cmd_preview(args) -> int:
         print(f"📐 Grid: {config.cols}x{config.rows}")
 
         start_time = time.time()
-        create_video_preview(config)
+        create_video_thumbnails(config)
         elapsed = time.time() - start_time
 
         print(f"\n✅ Preview generated in {format_duration(elapsed)}")
@@ -238,7 +238,7 @@ def cmd_batch(args) -> int:
                 )
 
                 # Process the video
-                create_video_preview(config)
+                create_video_thumbnails(config)
 
                 if os.path.exists(output_path):
                     size = format_file_size(os.path.getsize(output_path))

@@ -131,8 +131,8 @@ Presets:
   quality  - Quality optimized (4x6 grid, 30fps)
 
 Requirements:
-  - Python 3.7+
   - moviepy (pip install moviepy)
+  - pymediainfo (for video metadata)
   - Pillow (pip install Pillow)
   - gifsicle (system package)
 """)

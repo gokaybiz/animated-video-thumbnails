@@ -1,5 +1,5 @@
 """
-Pure functions for animated video thumbnails.
+Functions for animated video thumbnails.
 
 This module contains deterministic functions without side effects.
 All functions are pure - they return the same output for the same input

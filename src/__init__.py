@@ -2,11 +2,11 @@
 Animated Video Thumbnails - A functional programming approach to video preview generation.
 
 This package provides tools for creating animated GIF thumbnails from video files
-using functional programming principles with immutable data structures and pure functions.
+using functional programming principles with immutable data structures and functions.
 
 Main Components:
 - types: Immutable data models and type definitions
-- core: Pure functions and business logic
+- core: Functions and business logic
 - io: Side effect operations (file I/O, external processes)
 - pipeline: Main orchestration and workflow
 - config: Configuration management and defaults
@@ -48,7 +48,7 @@ from .io import (
 )
 
 from .pipeline import (
-    create_video_preview,
+    create_video_thumbnails,
 )
 
 from .config import (
@@ -103,7 +103,7 @@ __all__ = [
     "compress_gif",
 
     # Pipeline
-    "create_video_preview",
+    "create_video_thumbnails",
 
     # Configuration
     "create_default_processing_config",
